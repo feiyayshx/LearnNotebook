@@ -3,4 +3,5 @@
 本仓库记录学习笔记，工作中遇到问题的解决方案，业余练习的 demo 等技能点。
 
 # 文章目录索引
-- [支付密码输入组件开发](http//:www.baidu.com)
+
+- [支付密码输入Vue组件开发](https://github.com/feiyayshx/LearnNotebook/issues/1)
