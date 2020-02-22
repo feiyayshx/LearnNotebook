@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>百分比padding值与等比例头图效果</title>
+    <style>
+        .margin_30 {
+            margin: 30px;
+        }
+
+        .box {
+            position: relative;
+            padding: 10% 50%;
+        }
+
+        .box>img {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .inline-box {
+            border: 2px dashed #cd0000;
+        }
+
+        .inline-box>span {
+            padding: 50%;
+            background-color: gray;
+            /* font-size:0; */
+        }
+
+        .btn {
+            /* line-height: 20px;
+            padding: 10px; */
+            border: none;
+        }
+
+        #btn {
+            position: absolute;
+            clip: rect(0 0 0 0);
+        }
+
+        .btn-label {
+            display: inline-block;
+            line-height: 20px;
+            padding: 10px;
+        }
+
+        .icon-menu {
+            display: inline-block;
+            width: 100px;
+            height: 6px;
+            padding: 20px 0;
+            border-top: 6px solid #666;
+            border-bottom: 6px solid #666;
+            background-color: #666;
+            background-clip: content-box;
+        }
+
+        .icon-dot {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            padding: 8px;
+            border: 6px solid;
+            border-radius: 50%;
+            background-color: currentColor;
+            background-clip: content-box;
+        }
+
+        .father {
+            width: 300px;
+            background: red;
+        }
+
+        .son {
+            margin: 0 -20px;
+        }
+
+        .list-wrap {
+            margin-right: -20px;
+            overflow: hidden;
+        }
+
+        .list-item {
+            width: 120px;
+            height: 120px;
+            float: left;
+            background: #abcdef;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <img src="../../images/cssWorld/banner-top.png" alt="">
+    </div>
+    <!-- 对于内联元素，padding会断行 -->
+    <!-- <div class="inline-box">
+        <span>内有文字若干</span>
+    </div> -->
+    <!-- 按钮padding与高度计算不同浏览器下千差万别 -->
+    <div class="margin_30"><button class="btn">确定</button></div>
+    <!-- 解决button元素在不同浏览器下不一致的情况 -->
+    <div class="margin_30"><button id="btn"></button><label for="btn" class="btn-label">确定</label></div>
+    <!-- 菜单图标 https://demo.cssworld.cn/4/2-4.php -->
+    <div class="margin_30">
+        <i class="icon-menu"></i>
+        <i class="icon-dot"></i>
+    </div>
+    <!-- 当元素的尺寸符合‘充分利用可用空间’时，可以通过margin改变尺寸 -->
+    <div class="father">
+        <div class="son"></div>
+    </div>
+    <!-- margin实现列表两端对齐，中间有间隔 -->
+    <section class="list-wrap">
+        <div class="list-item"></div>
+        <div class="list-item"></div>
+        <div class="list-item"></div>
+        <div class="list-item"></div>
+    </section>
+    
+</body>
+
+</html>
