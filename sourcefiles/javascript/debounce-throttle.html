@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      .div-item {
+        margin: 20px;
+      }
+
+      label {
+        display: inline-block;
+        width: 140px;
+      }
+
+      input {
+        display: inline-block;
+        width: 180px;
+        height: 26px;
+        font-size: 16px;
+      }
+    </style>
+    <title>函数防抖和节流</title>
+  </head>
+
+  <body>
+    <div class="div-item">
+      <label for="">没有防抖的input</label>
+      <input type="text" placeholder="请输入账号" id="undebounce" />
+    </div>
+    <div class="div-item">
+      <label for="">防抖的input</label>
+      <input type="text" placeholder="请输入账号" id="debounce" />
+    </div>
+    <div class="div-item">
+      <label for="">节流的input</label>
+      <input type="text" placeholder="请输入账号" id="throttle" />
+    </div>
+    <script>
+      // 模拟ajax请求
+      function getAjax(data) {
+        console.log('ajax request:' + data)
+      }
+      // 防抖函数实现
+      function debounce(fn, delay) {
+        let timerId = null
+        return function() {
+          let that = this
+          let args = arguments
+          // 每次触发事件，执行防抖函数，都要清除定时器，重新计时
+          if (timerId) {
+            clearTimeout(timerId)
+            timerId = null
+          }
+          // 如果计时器到达规定时间，则执行回调函数，否则不执行，重新计时
+          timerId = setTimeout(function() {
+            fn.apply(that, args)
+          }, delay)
+        }
+      }
+      // 节流函数实现
+      function throttle(fn, delay) {
+        // 上一次执行该函数的时间
+        let lastTime = 0
+        return function(...args) {
+          // 当前时间
+          let now = +new Date()
+          // 将当前时间和上一次执行函数时间对比
+          // 如果差值大于设置的等待时间就执行函数
+          if (now - lastTime > delay) {
+            lastTime = now
+            fn.apply(this, args)
+          }
+        }
+      }
+
+      var undebounceEle = document.getElementById('undebounce')
+      var debounceEle = document.getElementById('debounce')
+      var throttleEle = document.getElementById('throttle')
+
+      undebounceEle.addEventListener('keyup', function(e) {
+        getAjax(e.target.value)
+      })
+
+      var debounceFn = debounce(getAjax, 2000)
+      debounceEle.addEventListener('keyup', function(e) {
+        debounceFn(e.target.value)
+      })
+
+      var throttleFn = throttle(getAjax, 2000)
+      throttleEle.addEventListener('keyup', function(e) {
+        throttleFn(e.target.value)
+      })
+    </script>
+  </body>
+</html>
