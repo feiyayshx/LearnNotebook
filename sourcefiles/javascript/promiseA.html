@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>promise/A+版实现</title>
+  </head>
+  <body>
+    <script>
+      function Promise(fn) {
+        // 三个常量用来保存状态
+        const PENDING = 'pending'
+        const RESOLVED = 'resolved'
+        const REJECTED = 'rejected'
+        // 异步调用时，保存当前执行上下文
+        const that = this
+        // 初始处于等待态
+        that.state = PENDING
+        // 终值
+        that.value = null
+        // 保存 then 中的回调
+        that.resolvedCallbacks = []
+        that.rejectedCallbacks = []
+        try {
+          fn(resolve, reject)
+        } catch (error) {
+          reject(error)
+        }
+
+        function resolve(value) {
+          // 判断value是否为Promise类型
+          if (value instanceof Promise) {
+            return value.then(resolve, reject)
+          }
+          // 为了保证函数执行顺序，需要将两个函数体代码使用 setTimeout 包裹起来
+          setTimeout(() => {
+            if (that.state === PENDING) {
+              that.state = RESOLVED
+              that.value = value
+              that.resolvedCallbacks.map(cb => cb(that.value))
+            }
+          }, 0)
+        }
+        function reject(value) {
+          setTimeout(() => {
+            if (that.state === PENDING) {
+              that.state = REJECTED
+              that.value = value
+              that.rejectedCallbacks.map(cb => cb(that.value))
+            }
+          }, 0)
+        }
+
+        Promise.prototype.then = function(onFulfilled, onRejected) {
+          const that = this
+          onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : v => v
+          onRejected =
+            typeof onRejected === 'function'
+              ? onRejected
+              : r => {
+                  throw r
+                }
+          // 等待态(pending)的逻辑
+          if (that.state === PENDING) {
+            var promise2 = new Promise((resolve, reject) => {
+              that.resolvedCallbacks.push(() => {
+                try {
+                  const x = onFulfilled(that.value)
+                  resolveProcess(promise2, x, resolve, reject)
+                } catch (e) {
+                  reject(e)
+                }
+              })
+              that.rejectedCallbacks.push(() => {
+                try {
+                  const x = onRejected(that.value)
+                  resolveProcess(promise2, x, resolve, reject)
+                } catch (e) {
+                  reject(e)
+                }
+              })
+            })
+            return promise2
+          }
+
+          // 执行态(fulfilled)的逻辑
+          if (that.state === RESOLVED) {
+            var promise2 = new Promise((resolve, reject) => {
+              setTimeout(() => {
+                try {
+                  const x = onFulfilled(that.value)
+                  resolveProcess(promise2, x, resolve, reject)
+                } catch (e) {
+                  reject(e)
+                }
+              }, 0)
+            })
+            return promise2
+          }
+          // 拒绝态(rejected)的逻辑
+          if (that.state === REJECTED) {
+            var promise2 = new Promise((resolve, reject) => {
+              setTimeout(() => {
+                try {
+                  const x = onRejected(that.value)
+                  resolveProcess(promise2, x, resolve, reject)
+                } catch (e) {
+                  reject(e)
+                }
+              }, 0)
+            })
+            return promise2
+          }
+        }
+      }
+
+      function resolveProcess(promise2, x, resolve, reject) {
+        // 规范规定x与promise2相等时， 以TypeError 为据因拒绝执行 promise，因为会发生循环引用问题
+        if (promise2 === x) {
+          return reject(new TypeError('Error'))
+        }
+        // 判断x类型
+        if (x instanceof Promise) {
+          x.then(function(value) {
+            resolveProcess(promise2, x, resolve, reject)
+          }, reject)
+        }
+        let called = false
+        if (x !== null && (typeof x === 'object' || typeof x === 'function')) {
+          try {
+            let then = x.then
+            if (typeof then === 'function') {
+              then.call(
+                x,
+                y => {
+                  if (called) return
+                  called = true
+                  resolveProcess(promise2, y, resolve, reject)
+                },
+                e => {
+                  if (called) return
+                  called = true
+                  reject(e)
+                },
+              )
+            } else {
+              resolve(x)
+            }
+          } catch (e) {
+            if (called) return
+            called = true
+            reject(e)
+          }
+        } else {
+          resolve(x)
+        }
+      }
+    </script>
+  </body>
+</html>

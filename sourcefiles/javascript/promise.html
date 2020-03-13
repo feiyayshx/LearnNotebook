@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>简易版Promise实现</title>
+  </head>
+  <body>
+    <script>
+      const PENDING = 'pending'
+      const RESOLVED = 'resolved'
+      const REJECTED = 'rejected'
+      function Promise(fn) {
+        const that = this
+        that.state = PENDING // 状态
+        that.value = null // 值
+        that.resolvedCallbacks = []
+        that.rejectedCallbacks = []
+        try {
+          fn(resolve, reject)
+        } catch (error) {
+          reject(error)
+        }
+        function resolve(value) {
+          if (that.state === PENDING) {
+            that.state = RESOLVED
+            that.value = value
+            that.resolvedCallbacks.map(cb => cb(that.value))
+          }
+        }
+        function reject(value) {
+          if (that.state === PENDING) {
+            that.state = REJECTED
+            that.value = value
+            that.rejectedCallbacks.map(cb => cb(that.value))
+          }
+        }
+      }
+
+      Promise.prototype.then = function(onFulfilled, onRejectd) {
+        const that = this
+        onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : v=>v
+        onRejectd =
+          typeof onRejectd === 'function'
+            ? onRejectd
+            : r => {
+                throw r
+              }
+        if (that.state === PENDING) {
+          that.resolvedCallbacks.push(onFulfilled)
+          that.rejectedCallbacks.push(onRejectd)
+        }
+        if (that.state === RESOLVED) {
+          onFulfilled(that.value)
+        }
+        if (that.state === REJECTED) {
+          onRejectd(that.value)
+        }
+      }
+    </script>
+  </body>
+</html>
