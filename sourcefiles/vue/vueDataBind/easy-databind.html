@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>简单数据双向绑定</title>
+  </head>
+  <body>
+    <input type="text" id="inp" />
+    <div id="inpdiv"></div>
+    <script type="text/javascript">
+      var inpValue = document.getElementById('inp')
+      var inpdiv = document.getElementById('inpdiv')
+      let obj = {}
+      inpValue.addEventListener('keyup', function(e) {
+        obj.name = e.target.value
+      })
+      Object.defineProperty(obj, 'name', {
+        get: function(value) {
+          return value
+        },
+        set: function(newValue) {
+          inpdiv.innerHTML = newValue
+        },
+      })
+      // promise.all 实现
+      function myPromiseAll(...args) {
+        let result = []
+        let count = 0
+        let argsLen = args.length
+        return new Promise((resolve, reject) => {
+          for (let i; i < args.length; i++) {
+            Promise.resolve(args[i]).then(
+              function(res) {
+                count++
+                result[i] = res
+                if (count === argsLen) {
+                  resolve(result)
+                }
+              },
+              function(error) {
+                reject(error)
+              },
+            )
+          }
+        })
+      }
+      myPromiseAll(1, 2, 3)
+    </script>
+  </body>
+</html>

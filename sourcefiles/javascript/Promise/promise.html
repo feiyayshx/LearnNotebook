@@ -58,6 +58,16 @@
           onRejectd(that.value)
         }
       }
+
+      new Promise(resolve => {
+          setTimeout(() => {
+              console.log('开始')
+              resolve(1)
+          },0)
+      }).then((res)=> {
+          console.log(res)
+          console.log('2')
+      })
     </script>
   </body>
 </html>
