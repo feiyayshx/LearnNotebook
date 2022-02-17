@@ -5,7 +5,7 @@
 
 - [Javascript的执行机制-事件循环](https://github.com/feiyayshx/LearnNotebook/issues/3) 
   
-- [Javascript之Node环境下的事件循环](https://github.com/feiyayshx/LearnNotebook/issues/3) 
+- [Javascript之Node环境下的事件循环](https://github.com/feiyayshx/LearnNotebook/issues/4) 
   
 - [Javascript之继承](https://github.com/feiyayshx/LearnNotebook/issues/5) 
   
