@@ -1,0 +1,29 @@
+# Conservative OpenSpec context for {{PROJECT_ID}}.
+# Review and replace bracketed values before using this for change generation.
+schema: spec-driven
+
+context: |
+  Project: {{PROJECT_ID}}
+  Stack: [record the detected stack]
+  Architecture: [link delivery-docs/architecture/overview.md when available]
+
+  Delivery invariants:
+  - Preserve Requirement IDs from proposal through tests and evidence.
+  - Keep each change to one independently acceptable vertical slice.
+  - Update affected specs, documentation, decisions, plans, and logs with code.
+  - Do not claim completion without a fresh, passed gate manifest for the current commit.
+  - Require explicit approval for destructive migrations and production release.
+
+rules:
+  proposal:
+    - Include Requirement IDs, scope, non-goals, risks, and acceptance outcomes.
+    - Identify compatibility, migration, security, and rollback impact.
+  specs:
+    - Express externally observable behavior with testable scenarios.
+    - Include negative, permission, empty, loading, and failure paths when applicable.
+  design:
+    - Reference related ADRs or explain why no ADR is needed.
+    - Describe contracts, observability, migration, and rollback strategy.
+  tasks:
+    - Include implementation, tests, documentation, and deterministic verification.
+    - Run targeted acceptance testing before verify/archive; run broader regression at milestones.

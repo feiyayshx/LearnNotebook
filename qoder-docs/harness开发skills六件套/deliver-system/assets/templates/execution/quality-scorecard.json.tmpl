@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "artifact_type": "quality-scorecard",
+  "change_id": "__CHANGE_ID__",
+  "subject_commit": "__SUBJECT_COMMIT__",
+  "hard_gates": {
+    "requirements_complete": false,
+    "core_acceptance_passed": false,
+    "no_unapproved_spec_or_prototype_deviation": false,
+    "no_critical_or_high_defects": false,
+    "no_hidden_skips_or_critical_flaky": false,
+    "integration_commit_bound": false,
+    "evidence_fresh": false,
+    "required_risk_gates_passed": false,
+    "independent_evaluation_passed": false,
+    "docs_and_recovery_complete": false
+  },
+  "dimensions": [
+    {"id": "requirements-and-functionality", "weight": 30, "minimum": 27, "score": 0, "evidence_refs": []},
+    {"id": "prototype-ux-and-states", "weight": 15, "minimum": 12, "score": 0, "evidence_refs": []},
+    {"id": "automated-tests-and-regression", "weight": 15, "minimum": 13, "score": 0, "evidence_refs": []},
+    {"id": "architecture-and-maintainability", "weight": 10, "minimum": 8, "score": 0, "evidence_refs": []},
+    {"id": "security-data-and-reliability", "weight": 10, "minimum": 9, "score": 0, "evidence_refs": []},
+    {"id": "performance-accessibility-compatibility", "weight": 10, "minimum": 8, "score": 0, "evidence_refs": []},
+    {"id": "documentation-operations-and-recovery", "weight": 10, "minimum": 8, "score": 0, "evidence_refs": []}
+  ],
+  "redistribution_approval_ref": null,
+  "total_score": 0,
+  "independent_evaluator": {
+    "identity": "__EVALUATOR_IDENTITY__",
+    "report_path": "__EVALUATOR_REPORT_PATH__",
+    "report_sha256": "__EVALUATOR_REPORT_DIGEST__"
+  },
+  "status": "draft"
+}

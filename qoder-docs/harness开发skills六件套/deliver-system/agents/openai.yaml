@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deliver System for Qoder"
+  short_description: "Build, test, and prepare a system for acceptance"
+  default_prompt: "Use $deliver-system in Qoder-native mode. Route this as Greenfield, Brownfield, or Resume; default a complete Spec/prototype Greenfield system to the enhanced planning path and reserve quick mode for a bounded clear R0-R2 Change. Keep OpenSpec and project documents authoritative; obtain an explicit Stage B execution manifest before Apply; implement one bounded Change at a time; trace each Acceptance through task, code, test, evidence, independent review, and integration; record bounded repair attempts; reopen failed tasks; and require all hard gates plus an evidence-backed quality score of at least 90 before acceptance-ready. Update plans, ADR/PDR, docs, and logs, and never production release unless I explicitly authorize it."

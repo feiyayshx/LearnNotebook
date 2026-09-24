@@ -1,0 +1,24 @@
+# 占位符: 项目名=项目正式名称; 项目简介=一句话项目定位(Phase 2 交互收集); 技术栈=主要语言/框架/存储(Phase 0 探测结论); 铁律摘要一行=P0 铁律的一行概括(如"账务表禁改结构;支付接口禁改签名",全文见 .qoder/rules/always-on-rules.md)。生成定稿时删除本注释行
+# 由 env-bootstrap 生成。规则全文只维护在 .qoder/rules/,此处仅放索引与摘要,防两处漂移
+# 已有 config.yaml 时仅增量补缺失段(context:/rules:),不覆盖已有配置(对应 baseline.md D2-3 补齐方式)
+schema: spec-driven
+
+context: |
+  项目:{{项目名}} — {{项目简介}}
+  技术栈:{{技术栈}}
+  P0 铁律索引:见 .qoder/rules/always-on-rules.md({{铁律摘要一行}})
+  规格文档落盘:docs/specs/;架构决策:docs/decisions/adr/
+
+rules:
+  proposal:
+    - 必须标注影响端与涉及模块,必须有 Out of Scope
+    - 触碰铁律范围需附回归方案
+  design:
+    - 数据库变更必须给出幂等 SQL 与回滚
+    - 重大技术选型须同步新增 ADR
+  tasks:
+    - 任务明确到具体文件/目录,按依赖顺序
+    - 修改存量代码任务须标兼容性验证点
+  specs:
+    - AC 覆盖正常/异常/边界三类场景
+    - 状态与枚举不硬编码

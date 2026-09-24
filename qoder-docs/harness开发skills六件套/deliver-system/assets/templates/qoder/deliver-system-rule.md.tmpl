@@ -1,0 +1,15 @@
+# Deliver-system project rules
+
+- Read applicable architecture, active plans, ADR/PDR, OpenSpec Change, test instructions, and the latest delivery report before changing code.
+- Preserve user changes and existing project conventions; do not silently replace architecture, frameworks, configuration, or documentation systems.
+- Keep one bounded, independently acceptable OpenSpec Change active per execution loop.
+- Do not start OpenSpec Apply or implementation without an explicitly approved `delivery-docs/state/execution/<change-id>/execution-manifest.json`; Qoder views cannot expand it.
+- Trace every in-scope requirement and prototype item through Acceptance, implementation task, code, automated test, fresh evidence, independent review, and integration commit in the verification matrix.
+- Run targeted tests after meaningful implementation batches; run affected regression and acceptance-level tests when a Change is complete; run full gates at milestone/release boundaries.
+- Append every implementation/repair round to the attempt ledger, and stop at the declared repeated-failure or no-progress budget.
+- Keep OpenSpec, plans, ADR/PDR, runbooks, status, and logs synchronized after material changes.
+- Reopen the linked Acceptance and OpenSpec task when verification finds a defect; never fix only the report or score.
+- Stop after bounded repair attempts and report the failure, evidence, attempted fixes, recommended options, and exact resume point.
+- Ask before destructive actions, production writes/deployments, real credentials/data, paid resources, irreversible migrations, or risk acceptance.
+- Do not claim `acceptance-ready` until independent evaluation passes, all hard gates pass, every quality dimension meets its minimum, total quality is at least 90, and `loopctl validate --final` passes.
+- Do not claim accepted or released without the corresponding current evidence and authorization.

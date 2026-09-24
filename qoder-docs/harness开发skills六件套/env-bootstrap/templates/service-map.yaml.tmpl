@@ -1,0 +1,18 @@
+# 占位符: 服务名=服务标识,供 depends_on 引用(V1 校验以此为准); 仓名=git 仓目录名; 实际路径=仓的实际所在位置(常规为 repos/仓名;不在 repos/ 下的照实记录,差异按 baseline.md D7-2 处理); 一句话职责=该服务做什么; 技术栈=语言+框架+构建工具(如 Maven + Spring Boot); 端口或 null=对外端口,探测不到填 null,不编造; 被依赖服务名=必须存在于本文件 services 列表; high|low=置信度,high=配置显式引用(有出处文件),low=仅凭命名推测; 依据一句话=依赖判断的出处(文件+线索); 按构建依赖排序的仓名列表=拓扑排序结果,每行一个仓名。生成定稿时删除本注释行
+# 服务拓扑 — 由 env-bootstrap 生成;repos/ 路径约定的唯一出处是 SKILL.md 与 baseline.md D7-2,此处不重复声明规则,path 仅逐服务照实记录实际路径(事实)
+# 禁止写入 token/密码/AK/SK;低置信度依赖须经用户确认后才可从 confidence: low 转正
+# dirty/缺失/异常仓对应的服务条目加一行 status: 待确认(经用户确认处置后删除该行),不阻塞其余仓分析
+services:
+  - name: {{服务名}}
+    repo: {{仓名}}
+    path: {{实际路径}}
+    description: {{一句话职责}}
+    tech: {{技术栈}}
+    port: {{端口或 null}}
+    depends_on:
+      - service: {{被依赖服务名}}
+        confidence: {{high|low}}
+        evidence: {{依据一句话}}
+# build_order 只含构建依赖(编译/包依赖)的拓扑排序,运行时调用/路由/消息订阅不参与;发现环时不强行排序,环内仓以注释标注待定并登记 docs/open-questions.md
+build_order:
+  - {{按构建依赖排序的仓名列表}}

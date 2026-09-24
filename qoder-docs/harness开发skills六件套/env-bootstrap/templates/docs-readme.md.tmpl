@@ -1,0 +1,33 @@
+<!-- 占位符: 项目名=项目正式名称。生成定稿时删除本注释行 -->
+<!-- 本文件由 env-bootstrap 生成;已有 README 时仅追加缺失的索引条目,不改动已有内容(对应 baseline.md D3-1 补齐方式) -->
+
+# {{项目名}} 文档索引
+
+本目录(`docs/`)是项目文档的统一落盘处,按下表分类存放与维护:
+
+| 目录 | 放什么 | 谁维护 | 更新时机 |
+|------|--------|--------|----------|
+| `specs/` | 需求规格说明书(spec-writing 产出) | 需求负责人(经 spec-writing 流程产出) | 新规格定稿时新增;定稿后只增不改 |
+| `maps/` | 五张项目地图(代码/业务域/接口/数据/环境,env-bootstrap D8 产出) | 架构负责人 | 模块/接口/表结构/环境变化时更新对应图 |
+| `decisions/adr/` | 架构决策记录,每个重大技术决策一条(状态 proposed / accepted / superseded) | 决策发起人 | 做出重大技术决策时新增;决策被替代时更新状态并同步索引 |
+| `env/` | 环境体检报告与人工待办(`env-report.md`、`todo-manual.md`) | env-bootstrap | 每次运行 env-bootstrap 体检后刷新 |
+| `open-questions.md` | 低置信度推断与待确认项 | 任何人可追加 | 发现待确认项即登记;决议后移入对应文档并关闭条目 |
+
+## 流水线产物路由表(全链路唯一登记处,协作者 clone 即得)
+
+| 落点 | 归属技能 | git 同步 | 说明 |
+|------|----------|----------|------|
+| `docs/specs/` | spec-writing(定稿) / spec-review(评审意见) | ✅ | 需求唯一事实源 |
+| `docs/maps/` | env-bootstrap D8 | ✅ | Agent 工作坐标系(五张地图) |
+| `docs/decisions/adr/` | 全部技能(**唯一 ADR 落点**,deliver-system 经 manifest 映射至此) | ✅ | 架构级决策 |
+| `openspec/` | OpenSpec CLI(deliver-system/轻量流) | ✅ | 变更账本(工具约定目录) |
+| `delivery-docs/` | deliver-system | ✅(`state/*.lock` 除外) | 单次交付证据账本 |
+| `.qoder/rules/` | env-bootstrap(生成) / 全部技能(遵守) | ✅ | 铁律与协同约定 |
+| `.qoder/ai-trace/` | ai-trace | ✅ | 跨任务量化指标与周报 |
+| `.qoder/verify-runs/` | spec-loop-verify | ✅(建议) | 验收运行档案(plan/report/fixes/adr/evidence) |
+| `.qoder/diff-scope.txt` | deliver-system/spec-loop-verify(写) / diff-gate(读) | ✅ | 当前任务施工白名单 |
+| `loop-test-*/` | spec-loop-verify | ❌(gitignore) | E2E 走查临时过程件,结束后可清理 |
+
+## 文档分层原则
+
+规则(`.qoder/rules/`)只放强约束短句,回答"什么不能做";docs(`docs/`)放背景与依据,回答"为什么这样做";spec(`docs/specs/`)是需求的唯一事实源,回答"要做成什么样";ADR(`docs/decisions/adr/`)记录决策及理由,回答"当时为什么这么选"。四者各司其职,**不互相复制内容**——需要引用时给链接,不粘贴正文,避免多处维护同一信息。
